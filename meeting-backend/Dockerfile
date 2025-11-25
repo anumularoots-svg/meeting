@@ -1,34 +1,55 @@
-# Multi-stage build for React Frontend
-FROM node:18-alpine AS build
+# Multi-stage build for Django Backend
+FROM python:3.11-slim AS base
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libpq-dev \
+    libmagic1 \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-RUN npm ci --only=production
+# Copy requirements
+COPY requirements.txt .
 
-# Copy source code
+# Install Python dependencies
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# Copy application code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Create necessary directories
+RUN mkdir -p /app/media /app/staticfiles /app/logs
 
-# Production stage
-FROM nginx:alpine
+# Collect static files
+RUN python manage.py collectstatic --noinput || true
 
-# Copy built assets from build stage
-COPY --from=build /app/build /usr/share/nginx/html
+# Create non-root user
+RUN useradd -m -u 1000 appuser && \
+    chown -R appuser:appuser /app
 
-# Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+USER appuser
 
 # Expose port
-EXPOSE 80
+EXPOSE 8000
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD python -c "import requests; requests.get('http://localhost:8000/health/', timeout=5)" || exit 1
 
-CMD ["nginx", "-g", "daemon off;"]
+# Run migrations and start server
+CMD ["sh", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 --workers 4 --threads 2 --timeout 120 --access-logfile - --error-logfile - meeting.wsgi:application"]
