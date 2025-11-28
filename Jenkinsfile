@@ -13,7 +13,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/anumularoots-svg/meeting.git'
+                checkout scm
+                sh 'ls -la'
             }
         }
         
@@ -75,11 +76,21 @@ pipeline {
                 sh '''
                     echo "Deploying to EKS..."
                     
+                    # Apply namespace
                     kubectl apply -f k8s/namespace.yaml
-                    kubectl apply -f k8s/configmap.yaml
+                    
+                    # Deploy MySQL first
+                    kubectl apply -f k8s/mysql-deployment.yaml
+                    
+                    # Wait for MySQL to be ready
+                    echo "Waiting for MySQL to start..."
+                    sleep 60
+                    
+                    # Deploy backend and frontend
                     kubectl apply -f k8s/backend-deployment.yaml
                     kubectl apply -f k8s/frontend-deployment.yaml
                     
+                    # Update images
                     kubectl set image deployment/meeting-frontend \
                         frontend=${ECR_FRONTEND}:${BUILD_NUMBER} \
                         -n ${NAMESPACE} || true
@@ -95,8 +106,7 @@ pipeline {
             steps {
                 sh '''
                     echo "Waiting for rollout..."
-                    kubectl rollout status deployment/meeting-frontend -n ${NAMESPACE} --timeout=300s || true
-                    kubectl rollout status deployment/meeting-backend -n ${NAMESPACE} --timeout=300s || true
+                    sleep 60
                     
                     echo "=== Pods Status ==="
                     kubectl get pods -n ${NAMESPACE}
