@@ -13,8 +13,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
-                sh 'ls -la'
+                git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/anumularoots-svg/meeting.git'
             }
         }
         
