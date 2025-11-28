@@ -1,6 +1,5 @@
 FROM python:3.10-slim-bookworm
 
-# Environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     DEBIAN_FRONTEND=noninteractive
@@ -41,37 +40,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# Upgrade pip
 RUN pip install --upgrade pip setuptools wheel
 
-# Copy requirements first
 COPY requirements.txt .
 
-# Install PyTorch CPU version (smaller image)
-RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
-
-# Install other requirements
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Install production server
-RUN pip install --no-cache-dir daphne gunicorn
-
-# Copy application code
-COPY . .
-
-# Collect static files
-RUN python manage.py collectstatic --noinput --clear 2>/dev/null || true
-
-# Create non-root user
-RUN useradd --create-home --shell /bin/bash appuser \
-    && chown -R appuser:appuser /app
-
-USER appuser
-
-EXPOSE 8000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:8000/api/health/ || exit 1
-
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "SampleDB.asgi:application"]
+# Install PyTorch CPU version
+RUN pip install --no-cache-dir torch torch
