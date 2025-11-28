@@ -4,7 +4,7 @@ from core.WebSocketConnection import enhanced_logging_config
 from django.db import connection, transaction, models
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from core.AI_Attendance.Attendance import start_attendance_tracking, stop_attendance_tracking
+#from core.AI_Attendance.Attendance import start_attendance_tracking, stop_attendance_tracking
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import path
 from django.utils import timezone
