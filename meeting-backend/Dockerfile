@@ -44,5 +44,14 @@ RUN pip install --upgrade pip setuptools wheel
 
 COPY requirements.txt .
 
-# Install PyTorch CPU version
-RUN pip install --no-cache-dir torch torch
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+RUN ls -la /app/ && test -f /app/manage.py && echo "manage.py found!"
+
+EXPOSE 8000
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
