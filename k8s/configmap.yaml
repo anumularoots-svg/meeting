@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: meeting-app-config
+  namespace: meeting-app-dev
+data:
+  DJANGO_SETTINGS_MODULE: "SampleDB.settings"
+  ALLOWED_HOSTS: "*"
+  DEBUG: "False"
