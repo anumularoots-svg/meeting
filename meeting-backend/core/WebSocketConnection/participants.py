@@ -23,17 +23,18 @@ import redis
 from django.conf import settings   
 
 # Add this import section at the top after other imports
-try:
-    from core.AI_Attendance.Attendance import (
-        record_participant_join_attendance, 
-        record_participant_leave_attendance,
-        calculate_meeting_end_attendance
-    )
-    ATTENDANCE_INTEGRATION = True
-    logging.info("✅ ATTENDANCE: Enhanced integration modules loaded successfully")
-except ImportError as e:
-    ATTENDANCE_INTEGRATION = False
-    logging.warning(f"⚠️ ATTENDANCE: Enhanced integration not available - {e}")
+#try:
+ #   from core.AI_Attendance.Attendance import (
+  #      record_participant_join_attendance, 
+   #     record_participant_leave_attendance,
+    #    calculate_meeting_end_attendance
+    #)
+    #ATTENDANCE_INTEGRATION = True
+    #logging.info("✅ ATTENDANCE: Enhanced integration modules loaded successfully")
+#except ImportError as e:
+ #   ATTENDANCE_INTEGRATION = False
+  #  logging.warning(f"⚠️ ATTENDANCE: Enhanced integration not available - {e}")
+ATTENDANCE_INTEGRATION = False
 
 # IST Timezone configuration
 IST_TIMEZONE = pytz.timezone('Asia/Kolkata')
