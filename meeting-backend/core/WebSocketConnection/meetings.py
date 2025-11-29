@@ -77,13 +77,14 @@ except ImportError as e:
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Add to your existing imports in meetings.py
-try:
-    from core.AI_Attendance.Attendance import start_attendance_tracking, stop_attendance_tracking
-    ATTENDANCE_ENABLED = True
-    print("✅ Attendance module loaded successfully")
-except ImportError as e:
-    ATTENDANCE_ENABLED = False
-    print(f"⚠️ Attendance module not available: {e}")
+#try:
+ #   from core.AI_Attendance.Attendance import start_attendance_tracking, stop_attendance_tracking
+  #  ATTENDANCE_ENABLED = True
+   # print("✅ Attendance module loaded successfully")
+#except ImportError as e:
+ #   ATTENDANCE_ENABLED = False
+  #  print(f"⚠️ Attendance module not available: {e}")
+ATTENDANCE_ENABLED = False
 
 # LiveKit Integration
 # FIXED: Check LiveKit availability FIRST before using it
