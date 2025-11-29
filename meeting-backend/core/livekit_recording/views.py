@@ -8,7 +8,7 @@ from django.views.decorators.http import require_http_methods
 from django.db import connection
 from django.utils import timezone
 
-from core.livekit_recording.recording_service import stream_recording_service
+#from core.livekit_recording.recording_service import stream_recording_service
 
 logger = logging.getLogger(__name__)
 
