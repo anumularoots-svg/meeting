@@ -57,22 +57,24 @@ logger = logging.getLogger('meetings')
 # Live Caption Imports
 import base64
 import io
-try:
-    import whisper
-    import torch
-    WHISPER_AVAILABLE = True
-    logging.info("✅ Whisper loaded successfully")
-except ImportError as e:
-    WHISPER_AVAILABLE = False
-    logging.warning(f"⚠️ Whisper not available: {e}")
+#try:
+ #   import whisper
+  #  import torch
+   # WHISPER_AVAILABLE = True
+   # logging.info("✅ Whisper loaded successfully")
+#except ImportError as e:
+ #   WHISPER_AVAILABLE = False
+  #  logging.warning(f"⚠️ Whisper not available: {e}")
+WHISPER_AVAILABLE = False
 
-try:
-    from googletrans import Translator
-    TRANSLATOR_AVAILABLE = True
-    logging.info("✅ GoogleTranslator loaded successfully")
-except ImportError as e:
-    TRANSLATOR_AVAILABLE = False
-    logging.warning(f"⚠️ GoogleTranslator not available: {e}")
+#try:
+ #   from googletrans import Translator
+  #  TRANSLATOR_AVAILABLE = True
+  #  logging.info("✅ GoogleTranslator loaded successfully")
+#except ImportError as e:
+ #   TRANSLATOR_AVAILABLE = False
+  #  logging.warning(f"⚠️ GoogleTranslator not available: {e}")
+TRANSLATOR_AVAILABLE = False
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
