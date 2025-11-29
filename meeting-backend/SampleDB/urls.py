@@ -29,7 +29,7 @@ urlpatterns = [
     path('', include('core.WebSocketConnection.reactions')),
     path('', include('core.UserDashBoard.meeting_invitations')),
     path('', include('core.UserDashBoard.feedback')),
-    path('', include('core.UserDashBoard.recordings')),
+    #path('', include('core.UserDashBoard.recordings')),
     path('', include('core.WebSocketConnection.notification_urls')),
     path('', include('core.WebSocketConnection.cache_only_hand_raise')),
     path('', include('core.Whiteboard.whiteboard_urls')),
