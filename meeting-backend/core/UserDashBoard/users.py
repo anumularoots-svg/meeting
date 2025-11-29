@@ -95,23 +95,25 @@ FROM_EMAIL = os.getenv("FROM_EMAIL", os.getenv("DEFAULT_FROM_EMAIL", SMTP_USERNA
 # ============================================================================
 # FACE EMBEDDINGS IMPORTS - Add after line 17, before "# Global Variables"
 # ============================================================================
-try:
-    from .face_embeddings import (
-        process_profile_photo_embedding,
-        process_image_for_recognition,
-        get_user_embeddings,
-        delete_face_embedding,
-        verify_face_match,
-        get_embedding_stats,
-        cleanup_orphaned_embeddings,
-        base64_to_numpy,
-        check_face_recognition_ready
-    )
-    FACE_RECOGNITION_ENABLED = True
-    logging.info("✓ Face recognition module imported successfully")
-except ImportError as e:
-    logging.warning(f"⚠ Face recognition module not available: {e}")
-    FACE_RECOGNITION_ENABLED = False
+#try:
+#    from .face_embeddings import (
+#        process_profile_photo_embedding,
+#        process_image_for_recognition,
+#        get_user_embeddings,
+#        delete_face_embedding,
+#        verify_face_match,
+#        get_embedding_stats,
+#        cleanup_orphaned_embeddings,
+#        base64_to_numpy,
+#        check_face_recognition_ready
+#    )
+#    FACE_RECOGNITION_ENABLED = True
+#    logging.info("✓ Face recognition module imported successfully")
+#except ImportError as e:
+#    FACE_RECOGNITION_ENABLED = False
+#    logging.warning(f"⚠ Face recognition not available: {e}")
+FACE_RECOGNITION_ENABLED = False
+
     # Create dummy functions if import fails
     def process_profile_photo_embedding(*args, **kwargs): return None
     def process_image_for_recognition(*args, **kwargs): return None
