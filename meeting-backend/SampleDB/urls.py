@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include('core.UserDashBoard.Analytics')),
     path('', include('core.WebSocketConnection.participants_urls')),
     path('', include('core.WebSocketConnection.chat_messages')),
-    path('', include('core.AI_Attendance.Attendance')),
+    #path('', include('core.AI_Attendance.Attendance')),
     # path('', include('core.WebSocketConnection.hand_rise')),
     path('', include('core.WebSocketConnection.reactions')),
     path('', include('core.UserDashBoard.meeting_invitations')),
