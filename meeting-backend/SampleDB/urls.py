@@ -34,5 +34,5 @@ urlpatterns = [
     path('', include('core.WebSocketConnection.cache_only_hand_raise')),
     path('', include('core.Whiteboard.whiteboard_urls')),
     # path('', include('core.recording_service.urls')),
-    path('', include('core.livekit_recording.urls')),
+    #path('', include('core.livekit_recording.urls')),
 ]
