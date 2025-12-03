@@ -114,16 +114,17 @@ FROM_EMAIL = os.getenv("FROM_EMAIL", os.getenv("DEFAULT_FROM_EMAIL", SMTP_USERNA
 #    logging.warning(f"⚠ Face recognition not available: {e}")
 FACE_RECOGNITION_ENABLED = False
 
-    # Create dummy functions if import fails
-    def process_profile_photo_embedding(*args, **kwargs): return None
-    def process_image_for_recognition(*args, **kwargs): return None
-    def get_user_embeddings(*args, **kwargs): return []
-    def delete_face_embedding(*args, **kwargs): return False
-    def verify_face_match(*args, **kwargs): return {'verified': False}
-    def get_embedding_stats(*args, **kwargs): return {}
-    def cleanup_orphaned_embeddings(*args, **kwargs): return 0
-    def base64_to_numpy(*args, **kwargs): return None
-    def check_face_recognition_ready(*args, **kwargs): return {'ready': False}
+    # Create dummy functions if import fail
+def process_profile_photo_embedding(*args, **kwargs): return None
+def process_image_for_recognition(*args, **kwargs): return None
+def get_user_embeddings(*args, **kwargs): return []
+def delete_face_embedding(*args, **kwargs): return False
+def verify_face_match(*args, **kwargs): return {'verified': False}
+def get_embedding_stats(*args, **kwargs): return {}
+def cleanup_orphaned_embeddings(*args, **kwargs): return 0
+def base64_to_numpy(*args, **kwargs): return None
+def check_face_recognition_ready(*args, **kwargs): return {'ready': False}
+  
 
 class User(models.Model):
     id = models.AutoField(primary_key=True)
