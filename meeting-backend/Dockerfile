@@ -27,7 +27,9 @@ RUN pip install --no-cache-dir \
     python-dotenv \
     djangorestframework \
     django-cors-headers \
+    django-extensions \
     channels \
+    channels-redis \
     redis \
     celery \
     boto3 \
@@ -42,7 +44,12 @@ RUN pip install --no-cache-dir \
     livekit \
     livekit-api \
     deep-translator \
-    googletrans==4.0.0-rc1
+    googletrans==4.0.0-rc1 \
+    asgiref \
+    daphne \
+    whitenoise \
+    cryptography \
+    pyjwt
 
 COPY . .
 
