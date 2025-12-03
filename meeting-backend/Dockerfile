@@ -49,7 +49,10 @@ RUN pip install --no-cache-dir \
     daphne \
     whitenoise \
     cryptography \
-    pyjwt
+    pyjwt \
+    aiopg \
+    aiohttp \
+    asyncpg
 
 COPY . .
 
