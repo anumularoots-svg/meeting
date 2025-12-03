@@ -6,8 +6,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Install minimal system dependencies
+# Install minimal system dependencies including build tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    pkg-config \
     libpq-dev \
     default-libmysqlclient-dev \
     libgl1 \
@@ -18,12 +20,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --upgrade pip setuptools wheel
 
-COPY requirements.txt .
-
-# Create lightweight requirements (skip heavy ML packages)
-RUN grep -v -E "torch|tensorflow|mediapipe|whisper|transformers|opencv|dlib|face_recognition" requirements.txt > requirements-light.txt || cp requirements.txt requirements-light.txt
-
-RUN pip install --no-cache-dir -r requirements-light.txt || pip install --no-cache-dir django gunicorn pymysql mysqlclient python-dotenv djangorestframework django-cors-headers
+# Install core dependencies only (no ML packages)
+RUN pip install --no-cache-dir \
+    django==4.2.* \
+    gunicorn \
+    pymysql \
+    mysqlclient \
+    python-dotenv \
+    djangorestframework \
+    django-cors-headers \
+    channels \
+    redis \
+    boto3 \
+    pillow \
+    requests
 
 COPY . .
 
