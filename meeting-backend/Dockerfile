@@ -52,7 +52,8 @@ RUN pip install --no-cache-dir \
     pyjwt \
     aiopg \
     aiohttp \
-    asyncpg
+    asyncpg \
+    reportlab
 
 COPY . .
 
