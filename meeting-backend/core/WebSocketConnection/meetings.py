@@ -170,7 +170,7 @@ class ProductionLiveKitService:
         
         # Optional Redis connection
         try:
-            self.redis_client = redis.Redis(host='192.168.48.201', port=6379, db=0, decode_responses=True)
+            self.redis_client = redis.Redis(host=os.getenv('REDIS_HOST', 'redis-svc'), port=6379, db=0, decode_responses=True)
             self.redis_client.ping()
             logging.info("✅ Redis connected for caching")
         except:
