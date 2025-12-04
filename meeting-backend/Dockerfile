@@ -13,6 +13,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     default-libmysqlclient-dev \
     libgl1 \
     libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    ffmpeg \
     curl \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
@@ -53,7 +57,9 @@ RUN pip install --no-cache-dir \
     aiopg \
     aiohttp \
     asyncpg \
-    reportlab
+    reportlab \
+    opencv-python-headless \
+    numpy
 
 COPY . .
 
