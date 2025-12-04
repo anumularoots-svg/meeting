@@ -8,6 +8,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
+    g++ \
     pkg-config \
     libpq-dev \
     default-libmysqlclient-dev \
@@ -18,48 +19,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxrender-dev \
     ffmpeg \
     curl \
+    cmake \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
 RUN pip install --upgrade pip setuptools wheel
 
-RUN pip install --no-cache-dir \
-    django==4.2.* \
-    gunicorn \
-    pymysql \
-    mysqlclient \
-    python-dotenv \
-    djangorestframework \
-    django-cors-headers \
-    django-extensions \
-    channels \
-    channels-redis \
-    redis \
-    celery \
-    boto3 \
-    pillow \
-    requests \
-    pytz \
-    python-dateutil \
-    pymongo \
-    pydub \
-    fpdf \
-    openai \
-    livekit \
-    livekit-api \
-    deep-translator \
-    googletrans==4.0.0-rc1 \
-    asgiref \
-    daphne \
-    whitenoise \
-    cryptography \
-    pyjwt \
-    aiopg \
-    aiohttp \
-    asyncpg \
-    reportlab \
-    opencv-python-headless \
-    numpy
+# Copy requirements first for caching
+COPY requirements.txt .
+
+# Install all requirements
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
