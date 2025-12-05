@@ -1,7 +1,7 @@
 // ENHANCED: src/utils/constants.js - Complete LiveKit Integration
 
 // FIXED: API Configuration - Base URL without /api suffix to avoid double /api
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || window.location.origin + '/api';
 export const WEBSOCKET_URL = import.meta.env.VITE_WEBSOCKET_URL || '/ws';
 
 // NEW: LiveKit Configuration
