@@ -400,7 +400,7 @@ function AppRoutes() {
     });
     
     // Check for active camera when NOT in meeting area
-    if (!isMeetingArea) {
+    if (!isMeetingArea && navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
       navigator.mediaDevices.enumerateDevices()
         .then(devices => {
           const videoDevices = devices.filter(d => d.kind === 'videoinput');
