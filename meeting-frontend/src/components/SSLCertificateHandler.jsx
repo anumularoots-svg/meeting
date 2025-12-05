@@ -109,7 +109,7 @@ const SSLCertificateHandler = () => {
             <li>Click "Accept Certificate" below</li>
             <li>A new tab will open - you'll see a security warning</li>
             <li>Click "Advanced" or "Show Details"</li>
-            <li>Click "Proceed to {new URL(API_BASE_URL).hostname} (unsafe)"</li>
+            <li>Click "Proceed to the site (unsafe)"</li>
             <li>Come back to this tab and refresh</li>
           </ol>
         </Box>
